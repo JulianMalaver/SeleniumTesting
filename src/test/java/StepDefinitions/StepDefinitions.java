@@ -2,9 +2,12 @@ package StepDefinitions;
 
 import Functions.CreateDriver;
 import Functions.SeleniumFunctions;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
@@ -52,11 +55,24 @@ public class StepDefinitions {
     }
 
 
-    @Then("^I load the DOM information(.*)$")
+    @Then("^I load the DOM information (.*)$")
     public void iLoadTheDomInformation(String json) throws Exception{
         SeleniumFunctions.FileName = json;
         SeleniumFunctions.readJson();
         log.info("initialize file: "+json);
+
+        JSONObject Entity = SeleniumFunctions.ReadEntity("Title");
+        System.out.println(Entity);
     }
+
+    @And("I do a click in element (.*)$")
+    public void iDoAClickInElement(String element) throws Exception{
+        By SeleniumElement = SeleniumFunctions.getCompleteElement(element);
+        driver.findElement(SeleniumElement).click();
+        log.info("Click on element by " + element);
+
+    }
+
+
 
 }

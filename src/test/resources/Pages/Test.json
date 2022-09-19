@@ -1,0 +1,11 @@
+{
+  "Title": {
+    "GetFieldBy": "XPath",
+    "ValueToFind": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]/div[2]/h2[1]"
+  },
+  "Email": {
+    "GetFieldBy": "XPath",
+    "ValueToFind": "//input[@id='email']"
+  }
+
+}

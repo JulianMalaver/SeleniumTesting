@@ -41,8 +41,8 @@ public class SeleniumFunctions {
                 return null;
             }
         }catch (FileNotFoundException | NullPointerException e){
-            log.error("ReadEntity: No existe el Archivo " + FileName);
-            throw new IllegalStateException("ReadEntity: No existe el Archivo " +FileName, e);
+            log.error("ReadEntity: File doesn't exist " + FileName);
+            throw new IllegalStateException("ReadEntity: File Doesn't exist " +FileName, e);
         }
     }
 
