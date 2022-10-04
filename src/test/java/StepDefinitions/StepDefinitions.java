@@ -17,8 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 public class StepDefinitions {
 
+    SeleniumFunctions functions = new SeleniumFunctions();
+
     private static Properties prop = new Properties();
-    private static InputStream in = CreateDriver.class.getResourceAsStream("../test.properties");
     private static String MainAppUrlBase;
 
     WebDriver driver;
@@ -31,12 +32,13 @@ public class StepDefinitions {
 
     @Given("^I am in the App main site")
     public void iAmInTheAppMainSite() throws IOException{
-        prop.load(in);
-        String url = prop.getProperty("MainAppUrlBase");
+        String url = functions.readProperties("MainAppUrlBase");
+        log.info("Go to: "+url);
         log.info("Navigate to " + url);
+        driver.get(url);
     }
 
-    @Given("^I go to site(.*)")
+    @Given("^I go to site (.*)")
     public void iGoToSite(String URL){
         log.info("Navigate to: "+URL);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -55,14 +57,12 @@ public class StepDefinitions {
     }
 
 
-    @Then("^I load the DOM information (.*)$")
+    @Then("^I load the DOM information (.*)")
     public void iLoadTheDomInformation(String json) throws Exception{
         SeleniumFunctions.FileName = json;
         SeleniumFunctions.readJson();
         log.info("initialize file: "+json);
 
-        JSONObject Entity = SeleniumFunctions.ReadEntity("Title");
-        System.out.println(Entity);
     }
 
     @And("I do a click in element (.*)$")

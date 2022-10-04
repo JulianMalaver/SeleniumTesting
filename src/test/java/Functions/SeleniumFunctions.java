@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -22,10 +23,10 @@ public class SeleniumFunctions {
     }
 
     private static Logger log = Logger.getLogger(SeleniumFunctions.class);
-    public static Properties pro = new Properties();
+    public static Properties prop = new Properties();
     public static InputStream in = SeleniumFunctions.class.getResourceAsStream("../test.properties");
 
-    public static String PagesFilesPath = "src/test/resources/Pages";
+    public static String PagesFilesPath = "src/test/resources/Pages/";
     public static String FileName = "";
     public static String GetFieldBy="";
     public static String ValueToFind="";
@@ -81,5 +82,10 @@ public class SeleniumFunctions {
             result = By.xpath(ValueToFind);
         }
         return result;
+    }
+
+    public String readProperties(String property) throws IOException {
+        prop.load(in);
+        return prop.getProperty(property);
     }
 }
