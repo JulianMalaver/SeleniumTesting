@@ -73,6 +73,13 @@ public class StepDefinitions {
 
     }
 
+    @And("^I set (.*) with text (.*)")
+    public void iSetWithText(String element, String text)throws Exception{
+        By SeleniumElement = SeleniumFunctions.getCompleteElement(element);
+        driver.findElement(SeleniumElement).sendKeys(text);
+        log.info("Send text" + text + "to element " + element);
+    }
+
 
 
 }

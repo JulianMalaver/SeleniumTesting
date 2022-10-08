@@ -1,20 +1,17 @@
 Feature: Test
   We are going to test the base components
 
-  @Test
-  Scenario: Get to the site
-    Given I am in the App main site
 
-  @Test
-    Scenario: Test
-      Given I go to site https://www.spotify.com/co/signup
-
-  @Test
-  Scenario: Get Url
-    Given I go to site https://www.spotify.com/co/signup
+  @TestDOM
+  Scenario: Get DOM
+    Given I go to site https://accounts.spotify.com/en/login
     Then I load the DOM information Test.json
-    And  I close the window
+    Then I close the window
 
-  @Test
-  Scenario: Test
-    Then I load the DOM information Test.json
+  @TestInsertInfo
+  Scenario: Do a click
+    Given I go to site https://accounts.spotify.com/en/login
+    Then  I load the DOM information Test.json
+    And I do a click in element Email
+    And I set Email with text Testasdfasdf
+    Then I close the window
