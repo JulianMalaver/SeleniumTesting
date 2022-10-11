@@ -2,6 +2,7 @@ package StepDefinitions;
 
 import Functions.CreateDriver;
 import Functions.SeleniumFunctions;
+import cucumber.api.java.an.E;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +18,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class StepDefinitions {
-
+    /**We are calling SeleniumFunctions.java**/
     SeleniumFunctions functions = new SeleniumFunctions();
 
     private static Properties prop = new Properties();
@@ -81,5 +83,27 @@ public class StepDefinitions {
     }
 
 
+    @Given("^I set (.*) Value in Data Scenario")
+    public void iSetUserEmailValueInDataScenario(String parameter) throws IOException {
+        functions.RetrieveTestData(parameter);
+    }
 
+    @And("^I save text of (.*) as Scenario Context$")
+    public void iSaveTextOfElementAsScenarioContext(String element) throws Exception{
+        By SeleniumElement = SeleniumFunctions.getCompleteElement(element);
+        String ScenarioElementText = driver.findElement(SeleniumElement).getText();
+        functions.SaveInScenario(element + ".text", ScenarioElementText);
+    }
+
+
+    @And("^I set text (.*) in dropdown (.*)")
+    public void iSetTextInDropdown(String element, String option) throws Exception{
+        functions.selectOptionDropDownByText(element,option);
+    }
+
+    @And("^I set text (.*) in dropdown (.*) alternative")
+    public void iSetTextInDropdownAlternative(String element, String option) throws Exception{
+        Select opt = (Select) functions.selectOption(element);
+        opt.selectByVisibleText(option);
+    }
 }

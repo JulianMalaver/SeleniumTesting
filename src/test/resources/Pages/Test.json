@@ -6,5 +6,10 @@
   "Password": {
     "GetFieldBy": "XPath",
     "ValueToFind": "//input[@id='login-password']"
+  },
+
+  "Text": {
+    "GetFieldBy": "XPath",
+    "ValueToFind": "//p[contains(text(),\"Don't have an account?\")]"
   }
 }
