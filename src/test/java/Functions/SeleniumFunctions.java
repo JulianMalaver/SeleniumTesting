@@ -24,45 +24,54 @@ public class SeleniumFunctions {
     //Creating the object of webDriver?
     WebDriver driver;
 
-    /**Key**/
+    /**
+     * Key
+     **/
 
     public static Map<String, String> ScenaryData = new HashMap<>();
     public static String Environment = "";
 
 
-    /**Log Attribute*/
-    public SeleniumFunctions(){
+    /**
+     * Log Attribute
+     */
+    public SeleniumFunctions() {
         driver = Hooks.driver;
     }
+
     private static Logger log = Logger.getLogger(SeleniumFunctions.class);
 
-    /** Test Properties Configuration**/
+    /**
+     * Test Properties Configuration
+     **/
     public static Properties prop = new Properties();
     public static InputStream in = SeleniumFunctions.class.getResourceAsStream("../test.properties");
 
-    public static String GetFieldBy="";
-    public static String ValueToFind="";
-    /** Page path**/
+    public static String GetFieldBy = "";
+    public static String ValueToFind = "";
+    /**
+     * Page path
+     **/
     public static String PagesFilesPath = "src/test/resources/Pages/";
     public static String FileName = "";
 
     //Search for the JSON file
-    public static Object readJson() throws Exception{
+    public static Object readJson() throws Exception {
         FileReader reader = new FileReader(PagesFilesPath + FileName);
-        try{
-            if(reader != null){
+        try {
+            if (reader != null) {
                 JSONParser jsonParser = new JSONParser();
                 return jsonParser.parse(reader);
-            }else{
+            } else {
                 return null;
             }
-        }catch (FileNotFoundException | NullPointerException e){
+        } catch (FileNotFoundException | NullPointerException e) {
             log.error("ReadEntity: File doesn't exist " + FileName);
-            throw new IllegalStateException("ReadEntity: File Doesn't exist " +FileName, e);
+            throw new IllegalStateException("ReadEntity: File Doesn't exist " + FileName, e);
         }
     }
 
-    public static JSONObject ReadEntity(String element) throws Exception{
+    public static JSONObject ReadEntity(String element) throws Exception {
         JSONObject Entity = null;
         //We call the last function
         JSONObject jsonObject = (JSONObject) readJson();
@@ -72,64 +81,68 @@ public class SeleniumFunctions {
     }
 
 
-    public static By getCompleteElement(String element) throws Exception{
+    public static By getCompleteElement(String element) throws Exception {
         By result = null;
         JSONObject Entity = ReadEntity(element);
 
         GetFieldBy = (String) Entity.get("GetFieldBy");
         ValueToFind = (String) Entity.get("ValueToFind");
 
-        if("className".equalsIgnoreCase(GetFieldBy)){
+        if ("className".equalsIgnoreCase(GetFieldBy)) {
             result = By.className(ValueToFind);
-        }else if("cssSelector".equalsIgnoreCase(GetFieldBy)){
+        } else if ("cssSelector".equalsIgnoreCase(GetFieldBy)) {
             result = By.cssSelector(ValueToFind);
-        }else if("id".equalsIgnoreCase(GetFieldBy)){
+        } else if ("id".equalsIgnoreCase(GetFieldBy)) {
             result = By.id(ValueToFind);
-        }else if("linkText".equalsIgnoreCase(GetFieldBy)){
+        } else if ("linkText".equalsIgnoreCase(GetFieldBy)) {
             result = By.linkText(ValueToFind);
-        }else if("name".equalsIgnoreCase(GetFieldBy)){
+        } else if ("name".equalsIgnoreCase(GetFieldBy)) {
             result = By.name(ValueToFind);
-        }else if("link".equalsIgnoreCase(GetFieldBy)){
+        } else if ("link".equalsIgnoreCase(GetFieldBy)) {
             result = By.partialLinkText(ValueToFind);
-        }else if("tagName".equalsIgnoreCase(GetFieldBy)){
+        } else if ("tagName".equalsIgnoreCase(GetFieldBy)) {
             result = By.tagName(ValueToFind);
-        }else if("XPath".equalsIgnoreCase(GetFieldBy)) {
+        } else if ("XPath".equalsIgnoreCase(GetFieldBy)) {
             result = By.xpath(ValueToFind);
         }
         return result;
     }
 
-    /**Read the properties of test.properties **/
+    /**
+     * Read the properties of test.properties
+     **/
     public String readProperties(String property) throws IOException {
         prop.load(in);
         return prop.getProperty(property);
     }
 
-    public void SaveInScenario(String key, String text){
-        if(!this.ScenaryData.containsKey(key)){
+    public void SaveInScenario(String key, String text) {
+        if (!this.ScenaryData.containsKey(key)) {
             this.ScenaryData.put(key, text);
-            log.info(String.format("Save as Scenario Context Key: x%s with value %s ",key,text));
-            System.out.println(String.format("Save as Scenario Context Key: x%s with value %s ",key,text));
-        }else{
+            log.info(String.format("Save as Scenario Context Key: x%s with value %s ", key, text));
+            System.out.println(String.format("Save as Scenario Context Key: x%s with value %s ", key, text));
+        } else {
             this.ScenaryData.replace(key, text);
-            log.info(String.format("Update Scenario Context key: %s with value: %s",key,text));
-            System.out.println(String.format("Update Scenario Context key: %s with value: %s",key,text));
+            log.info(String.format("Update Scenario Context key: %s with value: %s", key, text));
+            System.out.println(String.format("Update Scenario Context key: %s with value: %s", key, text));
         }
     }
 
-    public void RetrieveTestData(String parameter) throws IOException{
+    public void RetrieveTestData(String parameter) throws IOException {
         Environment = readProperties("Environment");
-        try{
+        try {
             SaveInScenario(parameter, readProperties(parameter + "." + Environment));
             System.out.println("This is the value of Scenario" + parameter + ":" + this.ScenaryData.get(parameter));
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**Select**/
+    /**
+     * Select
+     **/
 
-    public void selectOptionDropDownByText(String element, String option)throws Exception{
+    public void selectOptionDropDownByText(String element, String option) throws Exception {
         By SeleniumElement = SeleniumFunctions.getCompleteElement(element);
         Log.info(String.format("Waiting element: %s", element));
 
@@ -139,10 +152,6 @@ public class SeleniumFunctions {
 
     }
 
-    public ISelect selectOption(String element) throws Exception{
-        By SeleniumElement = SeleniumFunctions.getCompleteElement(element);
-        log.info(String.format("Waiting Element: %s", element));
-        Select opt = new Select(driver.findElement(SeleniumElement));
-        return opt;
-    }
+
+
 }

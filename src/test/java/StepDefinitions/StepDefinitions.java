@@ -106,4 +106,11 @@ public class StepDefinitions {
         Select opt = (Select) functions.selectOption(element);
         opt.selectByVisibleText(option);
     }
+
+    @And("^Texto de Seleccion (.*) Selector (.*)")
+    public void iSetTextColombiaInDropdownCountry(String option, String element)throws Exception {
+        Select opt = (Select) functions.selectOption(element);
+        opt.selectByVisibleText(option);
+    }
+
 }
