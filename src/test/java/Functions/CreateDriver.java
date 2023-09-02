@@ -26,6 +26,7 @@ public class CreateDriver {
         try{
             log.info("************************************************************************************");
             log.info("[ POM Configuration ] - Reading basic bases of ../test.properties ");
+            log.info("Test addition");
             prop.load(in);
             browser = prop.getProperty("browser");
             os = prop.getProperty("os");
